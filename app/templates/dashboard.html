@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-6">
+    Dashboard
+</h1>
+
+<div class="grid grid-cols-3 gap-6">
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold">
+            Total Tasks
+        </h2>
+
+        <p class="text-4xl mt-4">
+            {{ total_tasks }}
+        </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold">
+            Completed Tasks
+        </h2>
+
+        <p class="text-4xl mt-4">
+            {{ completed_tasks }}
+        </p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold">
+            Pending Tasks
+        </h2>
+
+        <p class="text-4xl mt-4">
+            {{ pending_tasks }}
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}
