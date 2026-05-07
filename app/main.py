@@ -30,7 +30,6 @@ templates = Jinja2Templates(
     directory="app/templates"
 )
 
-
 # Root route
 @app.get("/")
 def home():
