@@ -4,7 +4,6 @@ from fastapi import HTTPException
 from fastapi import Request
 
 from fastapi.responses import HTMLResponse
-from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
 
 from fastapi.security import OAuth2PasswordRequestForm
@@ -27,15 +26,41 @@ from app.auth import create_access_token
 
 from app.dependencies import get_current_user
 
-
 router = APIRouter()
 
-# Templates folder
 templates = Jinja2Templates(directory="app/templates")
 
 
 # =========================
-# SIGNUP
+# LOGIN PAGE
+# =========================
+@router.get("/login-page", response_class=HTMLResponse)
+def login_page(request: Request):
+
+    return templates.TemplateResponse(
+        "login.html",
+        {
+            "request": request
+        }
+    )
+
+
+# =========================
+# SIGNUP PAGE
+# =========================
+@router.get("/signup-page", response_class=HTMLResponse)
+def signup_page(request: Request):
+
+    return templates.TemplateResponse(
+        "signup.html",
+        {
+            "request": request
+        }
+    )
+
+
+# =========================
+# SIGNUP API
 # =========================
 @router.post("/signup")
 def signup(
@@ -70,7 +95,7 @@ def signup(
 
 
 # =========================
-# LOGIN
+# LOGIN API
 # =========================
 @router.post("/login")
 def login(
@@ -118,7 +143,6 @@ def create_project(
     current_user: User = Depends(get_current_user)
 ):
 
-    # RBAC CHECK
     if current_user.role != "admin":
         raise HTTPException(
             status_code=403,
@@ -184,6 +208,7 @@ def create_task(
     new_task = Task(
         title=task.title,
         description=task.description,
+        status=task.status,
         project_id=task.project_id,
         assigned_to=task.assigned_to
     )
@@ -212,7 +237,6 @@ def get_tasks(
 # =========================
 # DASHBOARD PAGE
 # =========================
-
 @router.get("/dashboard", response_class=HTMLResponse)
 def dashboard(
     request: Request,

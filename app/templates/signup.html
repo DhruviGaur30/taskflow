@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Signup</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="container">
+{% block content %}
 
-    <h1>Signup</h1>
+<div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg">
 
-    <form>
+    <h2 class="text-3xl font-bold text-center text-green-600 mb-6">
+        Signup
+    </h2>
 
-        <input type="text" placeholder="Name">
+    <form class="space-y-4">
 
-        <input type="email" placeholder="Email">
+        <input
+            type="text"
+            placeholder="Enter Name"
+            class="w-full border p-3 rounded-lg"
+        >
 
-        <input type="password" placeholder="Password">
+        <input
+            type="email"
+            placeholder="Enter Email"
+            class="w-full border p-3 rounded-lg"
+        >
 
-        <button type="submit">
+        <input
+            type="password"
+            placeholder="Enter Password"
+            class="w-full border p-3 rounded-lg"
+        >
+
+        <button
+            type="submit"
+            class="w-full bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg"
+        >
             Signup
         </button>
 
@@ -26,5 +39,4 @@
 
 </div>
 
-</body>
-</html>
+{% endblock %}

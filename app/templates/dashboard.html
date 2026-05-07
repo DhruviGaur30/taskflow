@@ -2,40 +2,46 @@
 
 {% block content %}
 
-<h1 class="text-3xl font-bold mb-6">
+<h1 class="text-4xl font-bold mb-8 text-blue-600">
     Dashboard
 </h1>
 
-<div class="grid grid-cols-3 gap-6">
+<div class="grid md:grid-cols-3 gap-6">
 
-    <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold">
+    <div class="bg-white rounded-xl shadow-lg p-6">
+
+        <h2 class="text-xl font-semibold text-gray-700">
             Total Tasks
         </h2>
 
-        <p class="text-4xl mt-4">
+        <p class="text-5xl font-bold text-blue-600 mt-4">
             {{ total_tasks }}
         </p>
+
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold">
-            Completed Tasks
-        </h2>
+    <div class="bg-yellow-100 rounded-xl shadow-lg p-6">
 
-        <p class="text-4xl mt-4">
-            {{ completed_tasks }}
-        </p>
-    </div>
-
-    <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold">
+        <h2 class="text-xl font-semibold text-gray-700">
             Pending Tasks
         </h2>
 
-        <p class="text-4xl mt-4">
+        <p class="text-5xl font-bold text-yellow-600 mt-4">
             {{ pending_tasks }}
         </p>
+
+    </div>
+
+    <div class="bg-green-100 rounded-xl shadow-lg p-6">
+
+        <h2 class="text-xl font-semibold text-gray-700">
+            Completed Tasks
+        </h2>
+
+        <p class="text-5xl font-bold text-green-600 mt-4">
+            {{ completed_tasks }}
+        </p>
+
     </div>
 
 </div>

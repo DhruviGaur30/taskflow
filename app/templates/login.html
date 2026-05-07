@@ -1,22 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="container">
+{% block content %}
 
-    <h1>Login</h1>
+<div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg">
 
-    <form>
+    <h2 class="text-3xl font-bold text-center text-blue-600 mb-6">
+        Login
+    </h2>
 
-        <input type="email" placeholder="Email">
+    <form class="space-y-4">
 
-        <input type="password" placeholder="Password">
+        <input
+            type="email"
+            placeholder="Enter Email"
+            class="w-full border p-3 rounded-lg"
+        >
 
-        <button type="submit">
+        <input
+            type="password"
+            placeholder="Enter Password"
+            class="w-full border p-3 rounded-lg"
+        >
+
+        <button
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg"
+        >
             Login
         </button>
 
@@ -24,5 +33,4 @@
 
 </div>
 
-</body>
-</html>
+{% endblock %}

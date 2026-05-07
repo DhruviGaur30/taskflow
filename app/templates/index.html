@@ -1,32 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TaskFlow RBAC</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="container">
+{% block content %}
 
-    <h1>TaskFlow RBAC</h1>
+<div class="bg-white rounded-xl shadow-lg p-10 text-center">
 
-    <p>Role Based Access Control Task Management System</p>
+    <h1 class="text-5xl font-bold text-blue-600 mb-6">
+        TaskFlow RBAC
+    </h1>
 
-    <div class="buttons">
+    <p class="text-lg text-gray-600 mb-8">
+        Full Stack Role-Based Task Management System built using FastAPI and PostgreSQL.
+    </p>
+
+    <div class="flex justify-center gap-6">
+
         <a href="/login-page">
-            <button>Login</button>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg">
+                Login
+            </button>
         </a>
 
         <a href="/signup-page">
-            <button>Signup</button>
+            <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg">
+                Signup
+            </button>
         </a>
 
         <a href="/docs">
-            <button>Swagger Docs</button>
+            <button class="bg-gray-800 hover:bg-black text-white px-6 py-3 rounded-lg">
+                Swagger Docs
+            </button>
         </a>
+
     </div>
 
 </div>
 
-</body>
-</html>
+{% endblock %}
