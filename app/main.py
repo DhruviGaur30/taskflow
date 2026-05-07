@@ -4,24 +4,34 @@ from fastapi.templating import Jinja2Templates
 
 from app.database import engine
 from app.models import Base
-from app.routers import router
+from app.routes import router
 
-# Create FastAPI app
-app = FastAPI(title="TaskFlow RBAC")
+# Create FastAPI application
+app = FastAPI(
+    title="TaskFlow RBAC",
+    version="1.0.0"
+)
 
-# Create database tables
+# Create database tables automatically
 Base.metadata.create_all(bind=engine)
 
-# Register all routes
+# Register all API routes
 app.include_router(router)
 
-# Serve static files
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+# Static files (CSS, JS, images)
+app.mount(
+    "/static",
+    StaticFiles(directory="app/static"),
+    name="static"
+)
 
-# Templates folder
-templates = Jinja2Templates(directory="app/templates")
+# HTML templates
+templates = Jinja2Templates(
+    directory="app/templates"
+)
 
 
+# Root route
 @app.get("/")
 def home():
     return {

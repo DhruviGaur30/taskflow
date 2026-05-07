@@ -2,18 +2,22 @@ from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import Request
+
 from fastapi.responses import HTMLResponse
+from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
+
+from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+
 from app.models import User
 from app.models import Project
 from app.models import Task
 
 from app.schemas import UserSignup
-from app.schemas import UserLogin
 from app.schemas import ProjectCreate
 from app.schemas import TaskCreate
 
@@ -22,6 +26,7 @@ from app.auth import verify_password
 from app.auth import create_access_token
 
 from app.dependencies import get_current_user
+
 
 router = APIRouter()
 
@@ -51,7 +56,8 @@ def signup(
     new_user = User(
         name=user.name,
         email=user.email,
-        password=hash_password(user.password)
+        password=hash_password(user.password),
+        role="member"
     )
 
     db.add(new_user)
@@ -62,18 +68,18 @@ def signup(
         "message": "User created successfully"
     }
 
+
 # =========================
 # LOGIN
 # =========================
-
 @router.post("/login")
 def login(
-    user: UserLogin,
+    form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
 
     db_user = db.query(User).filter(
-        User.email == user.email
+        User.email == form_data.username
     ).first()
 
     if not db_user:
@@ -82,7 +88,10 @@ def login(
             detail="Invalid credentials"
         )
 
-    if not verify_password(user.password, db_user.password):
+    if not verify_password(
+        form_data.password,
+        db_user.password
+    ):
         raise HTTPException(
             status_code=401,
             detail="Invalid credentials"
@@ -127,10 +136,10 @@ def create_project(
 
     return new_project
 
+
 # =========================
 # GET PROJECTS
 # =========================
-
 @router.get("/projects")
 def get_projects(
     db: Session = Depends(get_db),
@@ -203,28 +212,22 @@ def get_tasks(
 # =========================
 # DASHBOARD PAGE
 # =========================
-@router.get("/dashboard", response_class=HTMLResponse)
-def dashboard(
-    request: Request,
-    db: Session = Depends(get_db)
-):
+
+@router.get("/dashboard")
+def dashboard(db: Session = Depends(get_db)):
 
     total_tasks = db.query(Task).count()
 
-    completed_tasks = db.query(Task).filter(
-        Task.status == "DONE"
-    ).count()
-
     pending_tasks = db.query(Task).filter(
-        Task.status == "TODO"
+        Task.status == "pending"
     ).count()
 
-    return templates.TemplateResponse(
-        "dashboard.html",
-        {
-            "request": request,
-            "total_tasks": total_tasks,
-            "completed_tasks": completed_tasks,
-            "pending_tasks": pending_tasks
-        }
-    )
+    completed_tasks = db.query(Task).filter(
+        Task.status == "completed"
+    ).count()
+
+    return JSONResponse({
+        "total_tasks": total_tasks,
+        "pending_tasks": pending_tasks,
+        "completed_tasks": completed_tasks
+    })
