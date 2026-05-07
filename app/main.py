@@ -27,7 +27,7 @@ app.mount(
 
 # HTML templates
 templates = Jinja2Templates(
-    directory="app/templates/dashboard.html"
+    directory="app/templates"
 )
 
 
