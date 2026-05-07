@@ -4,7 +4,6 @@ from fastapi import HTTPException
 from fastapi import Request
 
 from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -26,9 +25,13 @@ from app.auth import create_access_token
 
 from app.dependencies import get_current_user
 
-router = APIRouter()
+from fastapi.templating import Jinja2Templates
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(
+    directory="app/templates"
+)
+
+router = APIRouter()
 
 
 # =========================
@@ -38,10 +41,9 @@ templates = Jinja2Templates(directory="app/templates")
 def login_page(request: Request):
 
     return templates.TemplateResponse(
-        "login.html",
-        {
-            "request": request
-        }
+        request=request,
+        name="login.html",
+        context={}
     )
 
 
@@ -52,10 +54,9 @@ def login_page(request: Request):
 def signup_page(request: Request):
 
     return templates.TemplateResponse(
-        "signup.html",
-        {
-            "request": request
-        }
+        request=request,
+        name="signup.html",
+        context={}
     )
 
 
@@ -254,9 +255,9 @@ def dashboard(
     ).count()
 
     return templates.TemplateResponse(
-        "dashboard.html",
-        {
-            "request": request,
+        request=request,
+        name="dashboard.html",
+        context={
             "total_tasks": total_tasks,
             "pending_tasks": pending_tasks,
             "completed_tasks": completed_tasks
