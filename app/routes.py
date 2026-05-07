@@ -213,8 +213,11 @@ def get_tasks(
 # DASHBOARD PAGE
 # =========================
 
-@router.get("/dashboard")
-def dashboard(db: Session = Depends(get_db)):
+@router.get("/dashboard", response_class=HTMLResponse)
+def dashboard(
+    request: Request,
+    db: Session = Depends(get_db)
+):
 
     total_tasks = db.query(Task).count()
 
@@ -226,8 +229,12 @@ def dashboard(db: Session = Depends(get_db)):
         Task.status == "completed"
     ).count()
 
-    return JSONResponse({
-        "total_tasks": total_tasks,
-        "pending_tasks": pending_tasks,
-        "completed_tasks": completed_tasks
-    })
+    return templates.TemplateResponse(
+        "dashboard.html",
+        {
+            "request": request,
+            "total_tasks": total_tasks,
+            "pending_tasks": pending_tasks,
+            "completed_tasks": completed_tasks
+        }
+    )
